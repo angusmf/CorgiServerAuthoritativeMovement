@@ -1,7 +1,7 @@
 {
-	"name": "com.angusmfllc.prn2corgi",
+	"name": "com.angusmfllc.prn.to.corgi",
 	"version": "0.0.1",
-	"displayName": "CorgiServerAuthoritativeMovement",
+	"displayName": "Corgi Server Authoritative Movement",
 	"description": "Integrates PredictionReconcilliationNetwork(https://github.com/TCleard/PredictionReconciliationNetwork), Corgi Engine (https://corgi-engine.moremountains.com/), and Netcode for GameObjects to provide server authoritative movement",
 	"unity": "2020.3",
 	"author": {
