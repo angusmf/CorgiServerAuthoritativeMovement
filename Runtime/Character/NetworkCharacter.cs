@@ -15,33 +15,13 @@ namespace PRN2Corgi {
 
         protected INetworkDeltaTime[] _networkAbilities;
 
-        void IProcessState.ProcessState() => ProcessTick();
-        
+        void IProcessState.ProcessState() => EveryFrame();        
 
-        public virtual void ProcessTick() {
-            if (Time.timeScale != 0f) {
-                ProcessAbilities();
-                LateProcessAbilities();
-                HandleCameraTarget();
-            }
-
-            // we send our various states to the animator.		 
-            UpdateAnimators();
-            RotateModel();
+        // Update is called once per frame
+        protected override void Update() {
+            // do not call base.Update() because it calls EveryFrame()
+            // For networked characters, we need to let PRN control exection of that method in the Processor implementation
         }
-
-        protected override void EveryFrame() {
-            HandleCharacterStatus();
-
-            // we process our abilities
-            EarlyProcessAbilities();
-        }
-
-
-        //protected override void Update() {
-        //    // do not call base.Update() because it calls EveryFrame()
-        //    // For networked characters, we need to let PRN control exection of that method in the Processor implementation
-        //}
 
         protected override void ProcessAbilities() {
 
