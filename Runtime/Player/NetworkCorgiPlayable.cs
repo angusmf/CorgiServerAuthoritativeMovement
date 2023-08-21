@@ -61,10 +61,10 @@ namespace PRN2Corgi {
         private void InitInputManager() {
             inputProvider = new PlayerInputProvider(inputManager);
             if (role == NetworkRole.SERVER || role == NetworkRole.OWNER || role == NetworkRole.HOST) {
-                character.SetInputManager(inputManager);
+                character.SetInputManager(inputManager, role);
             }
             else {
-                character.SetInputManager(null);
+                character.SetInputManager(null, role);
             }
         }
 
@@ -73,14 +73,12 @@ namespace PRN2Corgi {
 		}
 
 		[ServerRpc]
-		private void SendInputServerRpc(NetworkPlayerMovementInput input) {
-			networkHandler.OnOwnerInputReceived(input);
-		}
+		private void SendInputServerRpc(NetworkPlayerMovementInput input) =>
+			networkHandler.OnOwnerInputReceived(input);        
 
 		[ClientRpc]
-		private void SendStateClientRpc(NetworkPlayerMovementState state) {
-			networkHandler.OnServerStateReceived(state);
-		}
+		private void SendStateClientRpc(NetworkPlayerMovementState state) =>
+			networkHandler.OnServerStateReceived(state);		
 
 		public override void OnDestroy() {
 			base.OnDestroy();

@@ -14,11 +14,16 @@ namespace PRN2Corgi {
         private float networkDeltaTime;
 
         protected INetworkDeltaTime[] _networkAbilities;
+        private NetworkRole role;
 
         void IProcessState.ProcessState() => ProcessTick();
-        
+
 
         public virtual void ProcessTick() {
+            if (role != NetworkRole.OWNER && role != NetworkRole.HOST) { 
+                    EveryFrame();
+                }
+
             if (Time.timeScale != 0f) {
                 ProcessAbilities();
                 LateProcessAbilities();
@@ -38,10 +43,18 @@ namespace PRN2Corgi {
         }
 
 
-        //protected override void Update() {
-        //    // do not call base.Update() because it calls EveryFrame()
-        //    // For networked characters, we need to let PRN control exection of that method in the Processor implementation
-        //}
+        protected override void Update() {
+
+            //NetworkRole.HOST : NetworkRole.SERVER = IsServer = true
+            //NetworkRole.OWNER : NetworkRole.GUEST = IsServer = false
+
+            if (role == NetworkRole.OWNER || role == NetworkRole.HOST) {
+                    EveryFrame();
+                }
+
+                // do not call base.Update() because it calls EveryFrame()
+                // For networked characters, we need to let PRN control exection of that method in the Processor implementation
+            }
 
         protected override void ProcessAbilities() {
 
@@ -86,7 +99,10 @@ namespace PRN2Corgi {
             }
         }
 
-        public void SetInputManager(IInputProvider<NetworkPlayerMovementInput> inputManager) => SetInputManager(inputManager as InputManager);
+        public void SetInputManager(InputManager inputManager, NetworkRole role) {
+            this.role = role;
+            SetInputManager(inputManager);
+        }
 
         internal void SetFacingRight(bool isFacingRight) {
             if (IsFacingRight != isFacingRight) {
