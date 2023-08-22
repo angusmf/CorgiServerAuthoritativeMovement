@@ -13,9 +13,7 @@ namespace PRN2Corgi {
         private float networkDeltaTime;
 
         protected INetworkDeltaTime[] _networkAbilities;
-        void IProcessState.ProcessState() => EveryFrame();
-
-    
+        void IProcessState.ProcessState() => EveryFrame();    
 
         protected override void Update() {
             // do not call base.Update() because it calls EveryFrame()
