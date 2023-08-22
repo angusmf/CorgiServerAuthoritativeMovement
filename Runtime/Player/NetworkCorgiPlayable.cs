@@ -48,7 +48,6 @@ namespace PRN2Corgi {
             InitNetworkHandler();
         }
 
-
         private void InitNetworkHandler() {            
 
             networkHandler = new NetworkHandler<NetworkPlayerMovementInput, NetworkPlayerMovementState>(
@@ -65,10 +64,10 @@ namespace PRN2Corgi {
         private void InitInputProvider() {
             inputProvider = new PlayerInputProvider(inputManager);
             if (role == NetworkRole.SERVER || IsOwner) {
-                character.SetInputManager(inputManager, IsOwner);
+                character.SetInputManager(inputManager);
             }
             else {
-                character.SetInputManager(null, IsOwner);
+                character.SetInputManager(null);
             }
         }
 
