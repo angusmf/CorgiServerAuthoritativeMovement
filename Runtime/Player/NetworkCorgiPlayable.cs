@@ -42,10 +42,13 @@ namespace PRN2Corgi {
         private void Initialize() {
             ticker = new Ticker(TimeSpan.FromSeconds(1 / framesPerSecond));
             consistencyChecker = new PlayerStateChecker();
-
-            InitInputManager();
-
             processor = new NetworkPlayerProcessor(controller, inputManager, character);
+
+            InitInputProvider();
+            InitNetworkHandler();
+        }
+
+        private void InitNetworkHandler() {            
 
             networkHandler = new NetworkHandler<NetworkPlayerMovementInput, NetworkPlayerMovementState>(
                 role: role,
@@ -58,9 +61,9 @@ namespace PRN2Corgi {
             networkHandler.onSendStateToClient += SendStateClientRpc;
         }
 
-        private void InitInputManager() {
+        private void InitInputProvider() {
             inputProvider = new PlayerInputProvider(inputManager);
-            if (role == NetworkRole.SERVER || role == NetworkRole.OWNER || role == NetworkRole.HOST) {
+            if (role == NetworkRole.SERVER || IsOwner) {
                 character.SetInputManager(inputManager);
             }
             else {
@@ -72,15 +75,13 @@ namespace PRN2Corgi {
 			ticker.OnTimePassed(TimeSpan.FromSeconds(Time.fixedDeltaTime));
 		}
 
-		[ServerRpc]
-		private void SendInputServerRpc(NetworkPlayerMovementInput input) {
-			networkHandler.OnOwnerInputReceived(input);
-		}
+        [ServerRpc]
+        private void SendInputServerRpc(NetworkPlayerMovementInput input) =>
+            networkHandler.OnOwnerInputReceived(input);
 
-		[ClientRpc]
-		private void SendStateClientRpc(NetworkPlayerMovementState state) {
-			networkHandler.OnServerStateReceived(state);
-		}
+        [ClientRpc]
+		private void SendStateClientRpc(NetworkPlayerMovementState state) =>
+			networkHandler.OnServerStateReceived(state);		
 
 		public override void OnDestroy() {
 			base.OnDestroy();

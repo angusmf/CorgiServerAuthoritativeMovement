@@ -1,5 +1,4 @@
 using MoreMountains.CorgiEngine;
-using PRN;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,10 +13,8 @@ namespace PRN2Corgi {
         private float networkDeltaTime;
 
         protected INetworkDeltaTime[] _networkAbilities;
+        void IProcessState.ProcessState() => EveryFrame();    
 
-        void IProcessState.ProcessState() => EveryFrame();        
-
-        // Update is called once per frame
         protected override void Update() {
             // do not call base.Update() because it calls EveryFrame()
             // For networked characters, we need to let PRN control exection of that method in the Processor implementation
@@ -66,7 +63,6 @@ namespace PRN2Corgi {
             }
         }
 
-        public void SetInputManager(IInputProvider<NetworkPlayerMovementInput> inputManager) => SetInputManager(inputManager as InputManager);
 
         internal void SetFacingRight(bool isFacingRight) {
             if (IsFacingRight != isFacingRight) {
