@@ -14,15 +14,30 @@ namespace PRN2Corgi {
         private float networkDeltaTime;
 
         protected INetworkDeltaTime[] _networkAbilities;
-        private NetworkRole role;
+
+        private bool isOwner;
+        //private NetworkRole role;
+
+        //private bool config0 => role != NetworkRole.OWNER && role != NetworkRole.HOST && role != NetworkRole.SERVER;
+        //private bool config2 => role != NetworkRole.OWNER && role != NetworkRole.SERVER;
+        //private bool config3 => role != NetworkRole.OWNER;
+        //private bool config4 => role != NetworkRole.HOST && role != NetworkRole.SERVER;
+        //private bool config5 => role != NetworkRole.HOST;
+        //private bool config6 => role != NetworkRole.SERVER;
+        //private bool config7 => true;
+
+
+        //private bool config1 => role != NetworkRole.OWNER && role != NetworkRole.HOST;
+        //private bool Role => config1;
 
         void IProcessState.ProcessState() => ProcessTick();
 
 
         public virtual void ProcessTick() {
-            if (role != NetworkRole.OWNER && role != NetworkRole.HOST) { 
-                    EveryFrame();
-                }
+            if (!isOwner) { 
+            //if (Role) {
+                EveryFrame();
+            }
 
             if (Time.timeScale != 0f) {
                 ProcessAbilities();
@@ -44,17 +59,12 @@ namespace PRN2Corgi {
 
 
         protected override void Update() {
-
-            //NetworkRole.HOST : NetworkRole.SERVER = IsServer = true
-            //NetworkRole.OWNER : NetworkRole.GUEST = IsServer = false
-
-            if (role == NetworkRole.OWNER || role == NetworkRole.HOST) {
+            // do not call base.Update() because it calls EveryFrame()
+            // For networked characters, we need to let PRN control exection of that method in the Processor implementation
+            if (isOwner) { 
                     EveryFrame();
-                }
-
-                // do not call base.Update() because it calls EveryFrame()
-                // For networked characters, we need to let PRN control exection of that method in the Processor implementation
             }
+        }
 
         protected override void ProcessAbilities() {
 
@@ -99,9 +109,9 @@ namespace PRN2Corgi {
             }
         }
 
-        public void SetInputManager(InputManager inputManager, NetworkRole role) {
-            this.role = role;
-            SetInputManager(inputManager);
+        public void SetInputManager(InputManager inputManager, bool isOwner) {
+            base.SetInputManager(inputManager);
+            this.isOwner = isOwner;            
         }
 
         internal void SetFacingRight(bool isFacingRight) {

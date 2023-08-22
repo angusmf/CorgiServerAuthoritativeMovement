@@ -60,11 +60,11 @@ namespace PRN2Corgi {
 
         private void InitInputManager() {
             inputProvider = new PlayerInputProvider(inputManager);
-            if (role == NetworkRole.SERVER || role == NetworkRole.OWNER || role == NetworkRole.HOST) {
-                character.SetInputManager(inputManager, role);
+            if (role == NetworkRole.SERVER || IsOwner) {
+                character.SetInputManager(inputManager, IsOwner);
             }
             else {
-                character.SetInputManager(null, role);
+                character.SetInputManager(null, IsOwner);
             }
         }
 
