@@ -30,7 +30,7 @@ namespace PRN2Corgi {
             Initialize();
         }
 
-        private void SetRole() {
+        protected virtual void SetRole() {
             if (IsServer) {
                 role = IsOwner ? NetworkRole.HOST : NetworkRole.SERVER;
             }
@@ -39,7 +39,7 @@ namespace PRN2Corgi {
             }
         }
 
-        private void Initialize() {
+        protected virtual void Initialize() {
             ticker = new Ticker(TimeSpan.FromSeconds(1 / framesPerSecond));
             consistencyChecker = new PlayerStateChecker();
             processor = new NetworkPlayerProcessor(controller, inputManager, character);
@@ -48,7 +48,7 @@ namespace PRN2Corgi {
             InitNetworkHandler();
         }
 
-        private void InitNetworkHandler() {            
+        protected virtual void InitNetworkHandler() {            
 
             networkHandler = new NetworkHandler<NetworkPlayerMovementInput, NetworkPlayerMovementState>(
                 role: role,
@@ -61,7 +61,7 @@ namespace PRN2Corgi {
             networkHandler.onSendStateToClient += SendStateClientRpc;
         }
 
-        private void InitInputProvider() {
+        protected virtual void InitInputProvider() {
             inputProvider = new PlayerInputProvider(inputManager);
             if (role == NetworkRole.SERVER || IsOwner) {
                 character.SetInputManager(inputManager);
@@ -71,16 +71,16 @@ namespace PRN2Corgi {
             }
         }
 
-        private void FixedUpdate() {
+        protected virtual void FixedUpdate() {
 			ticker.OnTimePassed(TimeSpan.FromSeconds(Time.fixedDeltaTime));
 		}
 
         [ServerRpc]
-        private void SendInputServerRpc(NetworkPlayerMovementInput input) =>
+        protected virtual void SendInputServerRpc(NetworkPlayerMovementInput input) =>
             networkHandler.OnOwnerInputReceived(input);
 
         [ClientRpc]
-		private void SendStateClientRpc(NetworkPlayerMovementState state) =>
+		protected virtual void SendStateClientRpc(NetworkPlayerMovementState state) =>
 			networkHandler.OnServerStateReceived(state);		
 
 		public override void OnDestroy() {

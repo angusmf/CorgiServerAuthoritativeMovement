@@ -28,7 +28,7 @@ namespace PRN2Corgi {
             _primaryMovement.y = verticalInput;
         }
 
-        public void SetJumpButtonState(MMInput.ButtonStates jumpButtonState) { 
+        public virtual void SetJumpButtonState(MMInput.ButtonStates jumpButtonState) { 
             switch(jumpButtonState) {
                 case MMInput.ButtonStates.ButtonUp:
                     JumpButton.State.ChangeState(MMInput.ButtonStates.ButtonUp);
