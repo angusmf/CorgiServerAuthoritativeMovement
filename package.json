@@ -1,16 +1,16 @@
 {
-	"name": "com.angusmfllc.prn.to.corgi",
-	"version": "0.0.1",
-	"displayName": "Corgi Server Authoritative Movement",
-	"description": "Integrates PredictionReconcilliationNetwork(https://github.com/TCleard/PredictionReconciliationNetwork), Corgi Engine (https://corgi-engine.moremountains.com/), and Netcode for GameObjects to provide server authoritative movement",
-	"unity": "2020.3",
-	"author": {
-		"name": "angusmf LLC",
-		"email": "angusmf@gmail.com",
-		"url": "https://github.com/angusmf"
-	},
-	"documentationUrl": "https://github.com/angusmf/CorgiServerAuthoritativeMovement",
-	"dependencies": {
-		"com.unity.netcode.gameobjects": "1.5.2"
-	}
+  "name": "com.angusmfllc.prn.to.corgi",
+  "version": "0.1.0",
+  "displayName": "Corgi Server Authoritative Movement",
+  "description": "Integrates PredictionReconcilliationNetwork(https://github.com/TCleard/PredictionReconciliationNetwork), Corgi Engine (https://corgi-engine.moremountains.com/), and Netcode for GameObjects to provide server authoritative movement",
+  "unity": "2020.3",
+  "author": {
+    "name": "angusmf LLC",
+    "email": "angusmf@gmail.com",
+    "url": "https://github.com/angusmf"
+  },
+  "documentationUrl": "https://github.com/angusmf/CorgiServerAuthoritativeMovement",
+  "dependencies": {
+    "com.unity.netcode.gameobjects": "1.5.2"
+  }
 }
