@@ -3,22 +3,6 @@ using UnityEngine;
 using PRN;
 using MoreMountains.Tools;
 
-public struct InterfaceTest : IInterfaceTest {
-    public int GetTick() {
-        throw new System.NotImplementedException();
-    }
-
-    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
-        throw new System.NotImplementedException();
-    }
-
-    public void SetTick(int tick) {
-        throw new System.NotImplementedException();
-    }
-}
-
-public interface IInterfaceTest : IInput, INetworkSerializable { }
-
 public struct NetworkPlayerMovementInput : IInput, INetworkSerializable
 {
     public int tick;

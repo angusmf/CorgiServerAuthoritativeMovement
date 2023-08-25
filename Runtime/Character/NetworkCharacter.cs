@@ -65,13 +65,13 @@ namespace PRN2Corgi {
         }
 
 
-        internal void SetFacingRight(bool isFacingRight) {
+        public virtual void SetFacingRight(bool isFacingRight) {
             if (IsFacingRight != isFacingRight) {
                 Flip();
             }
         }
 
-        public void SetNetworkDeltaTime(float networkDeltaTime) {
+         public void SetNetworkDeltaTime(float networkDeltaTime) {
             this.networkDeltaTime = networkDeltaTime;
         }
     }
